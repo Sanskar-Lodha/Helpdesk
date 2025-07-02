@@ -1,25 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import EditAccountForm from "./pages/EditAccountForm";
+import Forgotpassword from "./pages/Forgotpassword";
+import MyTickets from "./pages/MyTickets";
+import NewTicket from "./pages/NewTicket";
+import Signin from "./pages/Signin";
+import Signup from "./pages/Signup";
+import Template from "./pages/Template";
+import UserProfile from "./pages/Userprofile";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/forgotpass" element={<Forgotpassword />} />
+        <Route path="/template" element={<Template />} />
+
+        <Route element={<Template />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/new-ticket" element={<NewTicket />} />
+          <Route path="/my-tickets" element={<MyTickets />} />
+          <Route path="/userprofile" element={<UserProfile />} />
+          <Route path="/edituser" element={<EditAccountForm />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
+
+// function App() {
+//   return (
+//     <BrowserRouter>
+//       <Routes>
+//         <Route path="/" element={<Signin />} />
+//         <Route path="/signup" element={<Signup />} />
+//         <Route path="/forgotpass" element={<Forgotpassword />} />
+
+//         {/* Layout with nested routes */}
+//         <Route element={<Template />}>
+//           <Route path="/dashboard" element={<Dashboard />} />
+//           <Route path="/new-ticket" element={<NewTicket />} />
+//           <Route path="/my-tickets" element={<MyTickets />} />
+//           <Route path="/userprofile" element={<UserProfile />} />
+//         </Route>
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// }
 
 export default App;
