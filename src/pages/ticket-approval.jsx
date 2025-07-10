@@ -104,7 +104,7 @@ export default function TicketApproval() {
               <td className="px-4 py-2 ">{ticket.date}</td>
               <td className="px-4 py-2  flex items-center gap-2">
                 <FaCheck className="text-black cursor-pointer" />
-                {/* <FaTimes className="text-black cursor-pointer" /> */}
+
                 <img
                   src={cross}
                   alt="cross"
