@@ -3,6 +3,7 @@ import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import barchat from "../assets/barchart.png";
 import help from "../assets/help.png";
 import online from "../assets/online.png";
+import { useUser } from "../UserContext";
 
 const StarRating = ({ rating }) => {
   const fullStars = Math.floor(rating);
@@ -42,14 +43,14 @@ function Dashboards() {
     { label: "Total In Progress", value: 2, bgColor: "#FCFF6C" },
   ]);
 
-  const user = "operations";
+  const { userRole } = useUser();
 
   return (
     <>
       <div className="h-full overflow-hidden">
         <div
-          className={`flex  ${
-            user === "operations"
+          className={`flex ${
+            userRole === "operations"
               ? "items-start"
               : "items-center justify-center"
           }`}
@@ -68,22 +69,23 @@ function Dashboards() {
           ))}
         </div>
       </div>
-      {user === "operations" && (
+
+      {["operations", "tech", "admin"].includes(userRole) && (
         <div className="flex justify-start items-start gap-12">
           <div className="w-[450px] h-[285px] bg-[#55D6C2] ml-12 flex justify-center items-center">
-            <img src={barchat} alt="barchat" className="w-[200px]"></img>
+            <img src={barchat} alt="barchat" className="w-[200px]" />
           </div>
           <div className="flex flex-col gap-3 font-sanchez">
             <div className="w-[470px] h-[180px] bg-[#55D6C2] flex justify-center items-center gap-14">
-              <div className="flex flex-col items-center ">
-                <img src={online} alt="online" className="w-[120px]"></img>
+              <div className="flex flex-col items-center">
+                <img src={online} alt="online" className="w-[120px]" />
                 <p className="text-[#05386B] text-2xl leading-none m-0">3</p>
                 <p className="text-lg leading-none m-0">Technical Supports</p>
               </div>
-              <div className="flex flex-col items-center ">
-                <img src={help} alt="online" className="w-[108px]"></img>
+              <div className="flex flex-col items-center">
+                <img src={help} alt="online" className="w-[108px]" />
                 <p className="text-[#05386B] text-2xl leading-none m-0">4</p>
-                <p className="text-lg  leading-none m-0">Operation Team</p>
+                <p className="text-lg leading-none m-0">Operation Team</p>
               </div>
             </div>
             <div className="w-[470px] h-[90px] rounded-lg bg-[#55D6C2] flex flex-col gap-3 items-center">

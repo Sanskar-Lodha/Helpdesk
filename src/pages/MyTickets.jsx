@@ -12,6 +12,7 @@ import edit from "../assets/edit.png";
 import logout from "../assets/logout.png";
 import undo from "../assets/undo.png";
 
+import { useUser } from "../UserContext";
 const ticketsData = [
   {
     id: 1234,
@@ -101,22 +102,21 @@ const StarRating = ({ rating }) => {
 };
 
 export default function MyTicket() {
+  const { userRole } = useUser();
+  const isAdmin = userRole === "operations" || userRole === "tech";
+
   const [search, setSearch] = useState("");
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [selectedEdit, setSelectedEdit] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState(null);
-  const user = "operations"; // OR "tech" or "user"
 
   const filteredTickets = ticketsData.filter((ticket) =>
     ticket.subject.toLowerCase().includes(search.toLowerCase())
   );
 
-  const isAdmin = user === "operations" || user === "tech";
-
   return (
     <div className="p-6 font-sanchez">
       <p className="text-2xl mb-4">My Ticket</p>
-      {/* Search */}
       <div className="flex items-center mb-4 w-full max-w-xs relative">
         <input
           type="text"
@@ -127,7 +127,6 @@ export default function MyTicket() {
         />
         <FaSearch className="absolute right-3 text-gray-600" />
       </div>
-      {/* Show Entries */}
       <div className="flex items-center mb-2 text-sm">
         <span className="mr-2">Show:</span>
         <select className="border rounded px-2 py-1">
@@ -137,7 +136,6 @@ export default function MyTicket() {
         </select>
         <span className="ml-2">Entries</span>
       </div>
-      {/* Table */}
       <div className="overflow-x-auto">
         <table className="w-full border text-sm">
           <thead className="bg-gray-200">
@@ -196,8 +194,7 @@ export default function MyTicket() {
                           alt="edit"
                           className="w-[20px] cursor-pointer"
                           onClick={() => setSelectedEdit(ticket)}
-                        ></img>
-
+                        />
                         <FaUserCog
                           className="text-black cursor-pointer"
                           onClick={() => setSelectedTeam(ticket)}
@@ -207,7 +204,7 @@ export default function MyTicket() {
                     </td>
                   </>
                 ) : (
-                  <td className="px-3 py-2 text-center ">
+                  <td className="px-3 py-2 text-center">
                     <StarRating rating={ticket.rating} />
                   </td>
                 )}
@@ -227,7 +224,6 @@ export default function MyTicket() {
           <span className="cursor-pointer">&raquo;</span>
         </span>
       </div>
-      {/* Ticket Detail Popup */}
       {selectedTicket && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
           <div className="bg-white p-6 w-[90%] max-w-md rounded shadow-lg">
@@ -358,7 +354,7 @@ export default function MyTicket() {
                     className="w-[300px] h-[160px] rounded-lg shadow-md p-2"
                   ></textarea>
                 </div>
-                {user === "tech" && (
+                {userRole === "tech" && (
                   <div className="flex justify-center items-center">
                     <img src={logout} alt="logout" className="w-[30px]"></img>
                   </div>
